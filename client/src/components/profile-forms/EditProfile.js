@@ -29,12 +29,13 @@ const EditProfile = ({
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
   useEffect(() => {
+    getCurrentProfile();
     setFormData({
       company: loading || !profile.company ? '' : profile.company,
       website: loading || !profile.website ? '' : profile.website,
       location: loading || !profile.location ? '' : profile.location,
       status: loading || !profile.status ? '' : profile.status,
-      skills: loading || !profile.skills ? '' : profile.skills,
+      skills: loading || !profile.skills ? '' : profile.skills.join(','),
       githubusername:
         loading || !profile.githubusername ? '' : profile.githubusername,
       bio: loading || !profile.bio ? '' : profile.bio,
@@ -44,7 +45,7 @@ const EditProfile = ({
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       instagram: loading || !profile.social ? '' : profile.social.instagram
     });
-  }, [loading]);
+  }, [loading, getCurrentProfile]);
 
   const {
     company,
@@ -61,11 +62,11 @@ const EditProfile = ({
     instagram
   } = formData;
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     createProfile(formData, history, true);
   };
@@ -251,7 +252,7 @@ EditProfile.propTypes = {
   profile: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   profile: state.profile
 });
 
