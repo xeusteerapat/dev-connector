@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addExperience } from '../../actions/profile';
 
-const AddExperience = props => {
+const AddExperience = ({ addExperience, history }) => {
   const [formData, setFormData] = useState({
     company: '',
     title: '',
@@ -15,16 +15,17 @@ const AddExperience = props => {
     description: ''
   });
 
-  cosnt[(toDateDisable, toggleDisable)] = useState(false);
+  const [toDateDisabled, toggleDisabled] = useState(false);
 
   const { company, title, location, from, to, current, description } = formData;
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    addExperience(formData, history);
   };
 
   return (
@@ -35,7 +36,7 @@ const AddExperience = props => {
         positions that you have had in the past
       </p>
       <small>* = required field</small>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <div className="form-group">
           <input
             type="text"
@@ -76,9 +77,9 @@ const AddExperience = props => {
               name="current"
               checked={current}
               value={current}
-              onChange={e => {
+              onChange={(e) => {
                 setFormData({ ...formData, current: !current });
-                toggleDisable(!toDateDisable);
+                toggleDisabled(!toDateDisabled);
               }}
             />{' '}
             Current Job
@@ -86,7 +87,13 @@ const AddExperience = props => {
         </div>
         <div className="form-group">
           <h4>To Date</h4>
-          <input type="date" name="to" value={to} onChange={handleChange} />
+          <input
+            type="date"
+            name="to"
+            value={to}
+            onChange={handleChange}
+            disabled={toDateDisabled ? 'disabled' : ''}
+          />
         </div>
         <div className="form-group">
           <textarea
