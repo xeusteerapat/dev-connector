@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addEducation } from '../../actions/profile';
@@ -26,11 +27,11 @@ const AddEducation = ({ addEducation, history }) => {
     description
   } = formData;
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     addEducation(formData, history);
   };
@@ -84,7 +85,7 @@ const AddEducation = ({ addEducation, history }) => {
               name="current"
               checked={current}
               value={current}
-              onChange={(e) => {
+              onChange={e => {
                 setFormData({ ...formData, current: !current });
                 toggleDisabled(!toDateDisabled);
               }}
@@ -113,9 +114,9 @@ const AddEducation = ({ addEducation, history }) => {
           ></textarea>
         </div>
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">
+        <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
-        </a>
+        </Link>
       </form>
     </>
   );
@@ -125,4 +126,4 @@ AddEducation.propTypes = {
   addEducation: PropTypes.func.isRequired
 };
 
-export default connect(null, { addEducation })(AddEducation);
+export default connect(null, { addEducation })(withRouter(AddEducation));

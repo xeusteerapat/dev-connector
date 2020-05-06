@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addExperience } from '../../actions/profile';
@@ -18,11 +19,11 @@ const AddExperience = ({ addExperience, history }) => {
 
   const { company, title, location, from, to, current, description } = formData;
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     addExperience(formData, history);
   };
@@ -76,7 +77,7 @@ const AddExperience = ({ addExperience, history }) => {
               name="current"
               checked={current}
               value={current}
-              onChange={(e) => {
+              onChange={e => {
                 setFormData({ ...formData, current: !current });
                 toggleDisabled(!toDateDisabled);
               }}
@@ -105,9 +106,9 @@ const AddExperience = ({ addExperience, history }) => {
           ></textarea>
         </div>
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">
+        <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
-        </a>
+        </Link>
       </form>
     </>
   );
@@ -117,4 +118,4 @@ AddExperience.propTypes = {
   addExperience: PropTypes.func.isRequired
 };
 
-export default connect(null, { addExperience })(AddExperience);
+export default connect(null, { addExperience })(withRouter(AddExperience));
