@@ -28,14 +28,8 @@ export default function (state = initialState, action) {
         user: payload
       };
     case REGISTER_SUCCESS:
-      localStorage.setItem('token', payload.token);
-      return {
-        ...state,
-        ...payload,
-        isAuthenticated: true,
-        loading: false
-      };
     case LOGIN_SUCCESS:
+      localStorage.setItem('token', payload.token);
       return {
         ...state,
         ...payload,
